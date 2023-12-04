@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('booking_hotels', function (Blueprint $table) {
+        Schema::create('contacts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('booking_id')->constrained();
-            $table->enum('type_chambre', ['single', 'double', 'triple', 'quadruple']);
-            $table->enum('formule', ['petit-dejeuner', 'demi-pension', 'pension-complete']);
+            $table->foreignUuid('user_uuid')->nullable()->constrained('users', 'uuid');
+            $table->string('full_name');
+            $table->string('email');
+            $table->text('message');
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('booking_hotels');
+        Schema::dropIfExists('contacts');
     }
 };

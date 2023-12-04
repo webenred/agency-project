@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('booking_hotels', function (Blueprint $table) {
+        Schema::create('testimonials', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('booking_id')->constrained();
-            $table->enum('type_chambre', ['single', 'double', 'triple', 'quadruple']);
-            $table->enum('formule', ['petit-dejeuner', 'demi-pension', 'pension-complete']);
+            $table->foreignUuid('user_uuid')->constrained('users', 'uuid');
+            $table->text('testimonial');
+            $table->string('rating', 5);
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('booking_hotels');
+        Schema::dropIfExists('testimonials');
     }
 };

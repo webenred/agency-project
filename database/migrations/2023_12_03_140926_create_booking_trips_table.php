@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('booking_hotels', function (Blueprint $table) {
+        Schema::create('booking_trips', function (Blueprint $table) {
             $table->id();
             $table->foreignId('booking_id')->constrained();
             $table->enum('type_chambre', ['single', 'double', 'triple', 'quadruple']);
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('booking_hotels');
+        Schema::dropIfExists('booking_trips');
     }
 };

@@ -11,18 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->uuid()->primary();
+        Schema::create('booking_details', function (Blueprint $table) {
+            $table->id();
+            $table->foreignUuid('user_uuid')->constrained('users', 'uuid');
+            $table->foreignId('booking_id')->constrained();
             $table->string('first_name', 64);
             $table->string('last_name', 64);
-            $table->enum('sex', ['female', 'male']);
             $table->date('dob');
-            $table->string('phone', 10)->unique();
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->enum('role', ['client', 'admin']);
-            $table->rememberToken();
+            $table->string('passport_number', 20);
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('booking_details');
     }
 };

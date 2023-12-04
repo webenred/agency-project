@@ -16,8 +16,9 @@ return new class extends Migration
             $table->string('numbre_adult');
             $table->string('number_child');
             $table->string('number_baby');
-            $table->string('departure_date');
-            $table->timestamps('arrived_date');
+            $table->date('departure_date');
+            $table->date('arrived_date');
+            $table->timestamps();
         });
     }
 
