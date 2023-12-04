@@ -13,6 +13,7 @@ class UserFactory extends Factory
 {
     protected static ?string $password;
 
+    
     /**
      * Define the model's default state.
      *
@@ -21,10 +22,15 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            'first_name' => fake()->firstName(),
+            'last_name' => fake()->lastName(),
+            'sex' => rand(0, 1) ? 'female' : 'male',
+            'dob' => fake()->date(),
+            'phone' => rand(1000000000, 9999999999),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
+            'role' => 'client',
             'remember_token' => Str::random(10),
         ];
     }
