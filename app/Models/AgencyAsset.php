@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class AgencyAsset extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'agency_id',
+        'type',
+        'path'
+    ];
 }

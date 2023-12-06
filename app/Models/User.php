@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -31,22 +32,17 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
 
+    public function verificationCodes() : HasMany {
+        return $this->hasMany(VerificationCode::class);
+    }
+
+
     public $incrementing = false;
     protected $primaryKey = 'uuid';
 
     public function hasRole($role)
     {
-        switch ($role) {
-            case 'admin':
-                return $this->isAdmin();
-                break;
-            case 'partner':
-                return $this->isPartner();
-                break;
-            default:
-                return false;
-                break;
-        }
+        return $this->role === $role;
     }
 
     public function is_admin() {

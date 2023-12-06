@@ -5,17 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class BookingTecketing extends Model
+class BookingDetail extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'user_uuid',
         'booking_id',
-        'flight_type',
-        'departure_airport',
-        'arrived_airport',
-        'compagnie',
-        'class'
+        'first_name',
+        'last_name',
+        'dob',
+        'passport_number'
     ];
-    
 }
