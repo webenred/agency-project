@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('agencies', function (Blueprint $table) {
+        Schema::create('coordinates', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 128);
-            $table->longText('description');
-            $table->json('networks');
-
+            $table->foreignId('agency_id')->constrained();
+            $table->json('coordinates');
+            $table->string('address', 128);
+            $table->string('city', 64);
+            $table->string('zip', 5);
+            $table->timestamps();
         });
     }
 
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('agencies');
+        Schema::dropIfExists('coordinates');
     }
 };

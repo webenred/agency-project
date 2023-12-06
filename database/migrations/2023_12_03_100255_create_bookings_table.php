@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('number_baby');
             $table->date('departure_date');
             $table->date('arrived_date');
+            $table->enum('status', ['validé', 'non-validé']);
             $table->timestamps();
         });
     }

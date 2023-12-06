@@ -17,11 +17,12 @@ return new class extends Migration
             $table->longText('description');
             $table->json('coordinates');
             $table->integer('classification');
-            $table->integer('nnumber_of_rooms');
+            $table->integer('number_rooms');
             $table->json('services');
-            $table->string('address', 128);
+            $table->string('country');
             $table->string('city', 64);
-            $table->string('zip', 5);
+            $table->string('address', 128);
+            $table->string('zip', 10);
             $table->timestamps();
         });
     }
