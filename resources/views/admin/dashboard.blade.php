@@ -1,4 +1,7 @@
 <x-admin-layout>
-    @include('layouts.side-bar')  
+    @include('layouts.header')
+    @include('layouts.side-bar')
+    
+    
 
 </x-admin-layout>

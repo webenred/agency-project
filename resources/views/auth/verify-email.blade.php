@@ -34,17 +34,21 @@
                 class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                 {{ __('Log Out') }}
             </button>
+
         </form>
     </div>
 
     <script>
+        // code verification
+        // resend email
+
         window.onload = () => {
             window.axios = axios;
-
             const codeForm = document.querySelector('#code-form');
             const codeInput = codeForm.querySelector('input[name=code]');
             const emailForm = document.querySelector('#email-form');
-
+            const btnResendEmail = document.querySelector('#resend-email');
+            
             emailForm.onsubmit = (event) => {
                 event.preventDefault();
                 reSendMail();
@@ -79,6 +83,7 @@
                 }
             }
         }
+
         const reSendMail = async () => {
             try {
                 response = await axios.post("{{ route('verification.send') }}");
@@ -95,8 +100,6 @@
             } catch (error) {
                 console.log(error);
             }
-
-
         }
 
         function btnLoader(query, mode = true) {
