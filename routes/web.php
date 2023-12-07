@@ -2,21 +2,15 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Models\Agency;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function (Request $request) {
-    if (Auth::check() && !$request->user()->email_verified_at) {
-        return redirect(route('verification.notice'));
-    }
-
+Route::get('/', function () {
     $agence = Agency::find(1);
     return view('welcome', ['agence' => $agence]);
 })->name('welcome');
 
+Route::get('/test', function(){});
 Route::get('/trips', function() {})->name('trips');
 Route::get('/hotels', function() {})->name('hotels');
 Route::get('/ticketing', function() {})->name('ticketing');
