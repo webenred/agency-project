@@ -15,8 +15,6 @@ Route::get('/hotels', function() {})->name('hotels');
 Route::get('/ticketing', function() {})->name('ticketing');
 Route::get('/contact', function() {})->name('contact');
 
-
-
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
 })->middleware(['auth', 'verified', 'role:admin'])->name('dashboard');
