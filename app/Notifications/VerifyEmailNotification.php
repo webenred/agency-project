@@ -11,7 +11,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 
-class VerifyEmailNotification extends Notification implements ShouldQueue
+class VerifyEmailNotification extends Notification 
 {
     use Queueable, RandomVerificationCode;
     /**
@@ -33,9 +33,11 @@ class VerifyEmailNotification extends Notification implements ShouldQueue
         $code = $this->generate(); // verification code
 
         VerificationCode::create([
-            'uer_uuid' => $notifiable->uuid,
+            'user_uuid' => $notifiable->uuid,
             'code' => $code,
             'type' => 'email',
+            'created_at' => now(),
+            'invalidated_at' => now()->addHour()
         ]);
         return (new VerificationMail($notifiable, $code))
             ->to($notifiable->email);

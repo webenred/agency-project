@@ -39,7 +39,7 @@ class RegisteredUserController extends Controller
             'dob.day' => ['required', 'string', 'max:2'],
             'dob.month' => ['required', 'string', 'max:2'],
             'dob.year' => ['required', 'string', 'max:4'],
-            'phone' => ['required', 'string', 'max:10'],
+            'phone' => ['required', 'string', 'max:10', 'unique:'.User::class],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:128', 'unique:'.User::class],
             'password' => ['required', 'confirmed', 'min:8', Rules\Password::defaults()],
         ]);
@@ -58,6 +58,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect(route('verification.notice'));
     }
 }

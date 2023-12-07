@@ -1,3 +1,3 @@
 <div>
-    side bar
+    
 </div>

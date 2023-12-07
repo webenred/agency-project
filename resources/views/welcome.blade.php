@@ -16,6 +16,8 @@
     @include('layouts.top-bar')
     @include('layouts.nav-bar')
 
+
+
     <script>
         document.onscroll = (event) => {
             const navBar = document.querySelector('#navbar')

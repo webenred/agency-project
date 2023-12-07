@@ -32,36 +32,5 @@ class EmailVerificationNotificationController extends Controller
         ], "verification link sent successfully", 200);
     }
 
-    public function verifyEmail(Request $request)
-    {
-        if ($request->user()->email_verified_at) {
-            return $this->success([
-                'status' => 'redirect',
-                'redirect' => session()->get('url.intended', url('/'))
-            ], 'Email verified', 200);
-        }
-
-        $request->validate([
-            'code' => ['required', 'min:6', 'max:6']
-        ]);
-
-
-        $verificationCode = $request->user()->verificationCodes
-            ->where('type', '=', 'email')
-            ->where('code', '=', $request->code)
-            ->first();
-
-
-        if (!$verificationCode || Carbon::parse($verificationCode->invalidated_at)->isPast()) {
-            return $this->error([
-                'status' => 'error'
-            ], 'This code is invalid', 410);
-        }
-
-        if ($request->user()->markEmailAsVerified()) {
-            event(new Verified($request->user()));
-            $verificationCode->delete();
-            return $this->success(['redirect' => route('dashboard')], 'Email verified successfully');
-        }
-    }
+    
 }
