@@ -10,6 +10,7 @@ Route::get('/', function () {
     return view('welcome', ['agence' => $agence]);
 })->name('welcome');
 
+Route::get('/test', function(){});
 Route::get('/trips', function() {})->name('trips');
 Route::get('/hotels', function() {})->name('hotels');
 Route::get('/ticketing', function() {})->name('ticketing');
