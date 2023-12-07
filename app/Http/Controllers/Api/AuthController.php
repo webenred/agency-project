@@ -22,12 +22,6 @@ class AuthController extends Controller
 {
     use HttpResponses;
 
-    public function __construct()
-    {
-        $this->middleware('auth:sanctum')->only(['logout', 'verifyEmail', 'resetRequest', 'resetPassword', 'newPassword']);
-        $this->middleware('verified')->only(['resetRequest', 'resetPassword', 'newPassword']);
-    }
-
     public function login(Request $request): JsonResponse
     {
 
@@ -45,12 +39,6 @@ class AuthController extends Controller
             'user' => $user,
             'token' => $user->createToken('API Token Of ' . $user->email)->plainTextToken,
         ], 'logged successfully', 200);
-    }
-
-    public function logout(Request $request): JsonResponse
-    {
-        $request->user()->currentAccessToken()->delete();
-        return $this->success(null, "disconnected successfully", 200);
     }
 
     public function verifyEmail(Request $request)
@@ -84,78 +72,7 @@ class AuthController extends Controller
         if ($request->user()->markEmailAsVerified()) {
             event(new Verified($request->user()));
             $verificationCode->delete();
-            return $this->success(['redirect' => route('dashboard')], 'Email verified successfully');
+            return $this->success(['redirect' => route('welcome')], 'Email verified successfully');
         }
     }
-
-
-
-
-    // /**
-    //  * @param Request $request 
-    //  * @return JsonResponse 
-    //  * this controller send an email contains a code for reseting password
-    //  * 
-    //  */
-    // public function resetRequest(Request $request) : JsonResponse
-    // {
-    //     if (!$request->user()->hasVerifiedEmail()) {
-    //         $this->error(null, 'You must verify your email address', 401);
-    //     }
-
-    //     Notification::send($request->user(), new ResetPasswordNotification);
-    //     return $this->success(null, "We've email you reset code", 200);
-    // }
-
-    // /**
-    //  * @param Request $request
-    //  * @return JsonResponse
-    //  * this controller verify the code input, if he is valid that regenerate a new token 
-    //  */
-    // public function resetPassword(Request $request) : JsonResponse
-    // {
-    //     $request->validate([
-    //         'code' => ['required', 'max:6']
-    //     ]);
-
-    //     $verification = DB::table('verification_codes')
-    //         ->where('user_uuid', '=', $request->user()->uuid)
-    //         ->where('code', '=', $request->code)
-    //         ->where('type', '=', 'password')
-    //         ->first();
-
-    //     if (!$verification) {
-    //         return $this->error(null, 'This code does not exist', 404);
-    //     }
-
-    //     if (Carbon::parse($verification->invalidated_at)->isPast()) {
-    //         return $this->error(null, 'Your code is invalid', 410);
-    //     }
-
-    //     $request->user()->currentAccessToken()->delete();
-    //     return $this->success(
-    //         ['token' => $request->user()->createToken('API Token Of ' . $request->user()->email)->plainTextToken]
-    //     , 'user verified', 200);
-    // }
-
-    // /**
-    //  * @param Request $request 
-    //  * @return JsonResponse
-    //  * this controller for setting a new password
-    //  */
-    // public function newPassword(Request $request) : JsonResponse
-    // {
-    //     $request->validate([
-    //         'password' => ['required', Rules\Password::defaults()]
-    //     ]);
-
-    //     $status = $request->user()->update([
-    //         'password' => Hash::make($request->password)
-    //     ]);
-
-    //     if ($status) {
-    //         return $this->success($request->user(), 'Password reset successfully', 200);
-    //     }
-    //     return $this->error(null, 'Password not reset', '400');
-    // }
 }
