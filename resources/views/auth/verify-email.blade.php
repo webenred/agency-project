@@ -62,6 +62,7 @@
                 code = codeInput.value;
                 if (code.length === 6) {
                     try {
+                        btnResendEmail.setAttribute('disabled', '');
                         response = await axios.post("{{ route('verification.code') }}", {
                             code
                         });
