@@ -1,3 +1,4 @@
+{{-- top bar website --}}
 @php
     $networks = json_decode($agence->networks, true);
     $coordinates = $agence->coordinates;
