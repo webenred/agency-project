@@ -1,0 +1,15 @@
+.stars {
+    user-select: none;
+  }
+
+  .fa-star {
+    cursor: pointer;
+  }
+
+  .checked {
+    color: orange;
+  }
+
+  .fa-star:active {
+    transform: scale(1.2);
+  }
