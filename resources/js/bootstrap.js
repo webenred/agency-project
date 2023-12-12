@@ -6,6 +6,9 @@
 
 import axios from 'axios';
 
+import 'flowbite';
+
+
 axios.defaults.withCredentials = true;
 axios.defaults.withXSRFToken = true;
 window.axios = axios;
