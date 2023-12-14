@@ -14,7 +14,6 @@
     {{-- @include('layouts.header') --}}
     {{-- @include('layouts.side-bar') --}}
 
-    {{-- nav --}}
     <nav class="bg-gray-50 border-gray-200 ">
         <div class="flex flex-wrap items-center justify-between  p-4">
             <button
@@ -108,6 +107,7 @@
                     $routeIsDashboard = request()->routeIs('dashboard');
                     $routeIsAdminHotels= request()->routeIs('admin.hotels');
                     $routeIsAdminHotelCreate = request()->routeIs('admin.hotel.create');
+                    $routeIsAdminHotelShow = request()->routeIs('admin.hotel.show');
                 @endphp
 
                 {{-- dashboard --}}
@@ -126,11 +126,9 @@
                     </a>
                 </li>
 
-                {{-- Hotel  --}}
                 <li>
-                    <button type="button"
-                        class="{{ $routeIsAdminHotelCreate || $routeIsAdminHotels ? $selectedButton : '' }} flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100"
-                        aria-controls="dropdown-hotel-option" data-collapse-toggle="dropdown-hotel-option" >
+                    <a href="{{ route('admin.hotels') }}"
+                        class="{{ $routeIsAdminHotels || $routeIsAdminHotelCreate || $routeIsAdminHotelShow ? $selectedButton : '' }} flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                         <svg xmlns="http://www.w3.org/2000/svg"
                             class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900"
                             fill="currentColor" viewBox="0 0 256 256">
@@ -138,29 +136,11 @@
                                 d="M208,72H24V48A8,8,0,0,0,8,48V208a8,8,0,0,0,16,0V176H232v32a8,8,0,0,0,16,0V112A40,40,0,0,0,208,72ZM24,88H96v72H24Zm88,72V88h96a24,24,0,0,1,24,24v48Z">
                             </path>
                         </svg>
-                        <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Hôtel</span>
-                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 10 6">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m1 1 4 4 4-4" />
-                        </svg>
-                    </button>
-                    <ul id="dropdown-hotel-option" class="hidden py-2 space-y-2">
-                        <li>
-                            <a href="{{ route('admin.hotels') }}"
-                                class="{{ $routeIsAdminHotels ? $selectedLink : '' }} flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">
-                                Gestion d'hôtels
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('admin.hotel.create') }}"
-                                class="{{ $routeIsAdminHotelCreate ? $selectedLink : '' }} flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">
-                                Nouveau hôtel
-                            </a>
-                        </li>
-                    </ul>
+                        <span class="ms-3">Manage Hôtels</span>
+                    </a>
                 </li>
 
+                {{-- Trip
                 <li>
                     <a href="#"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
@@ -175,6 +155,7 @@
                             class="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-800 bg-gray-100 rounded-full dark:bg-gray-700 dark:text-gray-300">Pro</span>
                     </a>
                 </li>
+
                 <li>
                     <a href="#"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
@@ -189,6 +170,7 @@
                             class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span>
                     </a>
                 </li>
+
                 <li>
                     <a href="#"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
@@ -201,6 +183,7 @@
                         <span class="flex-1 ms-3 whitespace-nowrap">Users</span>
                     </a>
                 </li>
+
                 <li>
                     <a href="#"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
@@ -213,6 +196,7 @@
                         <span class="flex-1 ms-3 whitespace-nowrap">Products</span>
                     </a>
                 </li>
+
                 <li>
                     <a href="#"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
@@ -226,6 +210,7 @@
                         <span class="flex-1 ms-3 whitespace-nowrap">Sign In</span>
                     </a>
                 </li>
+
                 <li>
                     <a href="#"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
@@ -240,7 +225,8 @@
                         </svg>
                         <span class="flex-1 ms-3 whitespace-nowrap">Sign Up</span>
                     </a>
-                </li>
+                </li> --}}
+
             </ul>
         </div>
     </div>
