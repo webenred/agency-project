@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 // use Illuminate\Validation\Rule;
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\Validate;
 use Livewire\Attributes\Rule;
 use App\Models\Hotel;
@@ -15,7 +16,7 @@ class CreateHotel extends Component
 {
     public string $name;
 
-    public string $description;
+    public string $description = "la description de l'hotel ";
 
     public string $country = "Algeria";
 
@@ -30,6 +31,8 @@ class CreateHotel extends Component
     public int $nb_rooms;
 
     public string $services;
+
+    public array $assets;
 
 
     public function save()
@@ -46,6 +49,8 @@ class CreateHotel extends Component
             'rating' => ['required', 'integer'],
             'nb_rooms' => ['required', 'integer'],
             'services' => ['required'],
+            'assets' => ['required', 'array', 'min:1'],
+            'assets.*' => ['required', 'image', 'mimes:jpg,svg,png,jpeg']
         ]);
 
         // dd($this, json_encode(explode(',', $this->services)), $this->rating);

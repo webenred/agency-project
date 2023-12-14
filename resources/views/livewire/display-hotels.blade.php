@@ -1,5 +1,8 @@
-<div>
-    <div class="relative overflow-x-auto">
+<div class="mx-4 mt-2">
+    <livewire:filter>
+
+    {{-- table --}}
+    <div class="mt-4 relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -13,7 +16,7 @@
                         Classification
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        N° chambre
+                        Chambres
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Coordonnées
@@ -22,22 +25,26 @@
                         Adresse
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Créer à
+                        Créer_à
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Modifié à
+                        Modifié_à
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Opération
                     </th>
                 </tr>
             </thead>
+
             <tbody>
                 @foreach ($hotels as $hotel)
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                    <tr wire:key="{{ $hotel->id }}"
+                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600">
+                        {{-- name --}}
                         <th scope="row"
                             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            <a class="underline" target="_blank" href="{{ route('hotel', ['slug' => $hotel->slug]) }}">
+                            <a class="underline" target="_blank"
+                                href="{{ route('hotel', ['slug' => $hotel->slug]) }}">
                                 {{ $hotel->name }}
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 inline-block" fill="#000000"
                                     viewBox="0 0 256 256">
@@ -47,8 +54,10 @@
                                 </svg>
                             </a>
                         </th>
+
+                        {{-- description --}}
                         <td class="px-6 py-4">
-                            <span class="description" data-all="{{ $hotel->description }}"
+                            <span class="field" data-all="{{ $hotel->description }}"
                                 data-less="{{ Str::limit($hotel->description, 20) }}">{{ Str::limit($hotel->description, 20) }}</span>
 
                             <span onclick="showMore(event)"
@@ -60,19 +69,24 @@
                                 Moins
                             </span>
                         </td>
+
+                        {{-- classification --}}
                         <td class="px-6 py-4">
                             <div class="flex items-center">
                                 @for ($i = 1; $i <= $hotel->classification; $i++)
-                                    <svg class="w-4 h-4 text-yellow-300 ms-1" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                    <svg wire:key="{{ $i }}" class="w-4 h-4 text-yellow-300 ms-1"
+                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                        viewBox="0 0 22 20">
                                         <path
                                             d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
                                     </svg>
                                 @endfor
                                 @if ($hotel->classification != 5)
                                     @for ($i = 1; $i <= 5 - $hotel->classification; $i++)
-                                        <svg class="w-4 h-4 ms-1 text-gray-300 dark:text-gray-500" aria-hidden="true"
-                                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                        <svg wire:key="{{ $i }}"
+                                            class="w-4 h-4 ms-1 text-gray-300 dark:text-gray-500" aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                            viewBox="0 0 22 20">
                                             <path
                                                 d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
                                         </svg>
@@ -81,9 +95,13 @@
                             </div>
 
                         </td>
+
+                        {{-- number of rooms --}}
                         <td class="px-6 py-4">
                             {{ $hotel->number_rooms }}
                         </td>
+
+                        {{-- coordinates --}}
                         <td class="px-6 py-4">
                             <div>
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 inline-block" fill="#000000"
@@ -105,32 +123,106 @@
                             </div>
                         </td>
 
-                        <td>
-                            <span>{{ $hotel->address }},</span>
-                            <span class="block">{{ ucfirst($hotel->city) . ' ' . ucfirst($hotel->country) }}</span>
+                        {{-- address --}}
+                        <td class="px-6 py-4">
+                            @php
+                                $address = $hotel->address . ', ' . ucfirst($hotel->city) . ' ' . ucfirst($hotel->country);
+                            @endphp
+                            <span class="field" data-all="{{ $address }}"
+                                data-less="{{ Str::limit($address, 15) }}">{{ Str::limit($address, 15) }}</span>
+                            {{-- <span class="block">{{ ucfirst($hotel->city) . ' ' . ucfirst($hotel->country) }}</span> --}}
+
+                            <span onclick="showMore(event)"
+                                class="more select-none cursor-pointer font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                                Plus
+                            </span>
+                            <span onclick="showLess(event)"
+                                class="less hidden select-none cursor-pointer font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                                Moins
+                            </span>
                         </td>
 
+                        {{-- created_at --}}
                         <td class="px-6 py-4">
                             {{ $hotel->created_at }}
                         </td>
 
+                        {{-- updated at --}}
                         <td class="px-6 py-4">
                             {{ $hotel->updated_at == $hotel->created_at ? '' : $hotel->created_at }}
                         </td>
 
+                        {{-- operations --}}
                         <td class="px-6 py-6 inline-flex gap-1">
-                            <!-- Modal toggle -->
+
+                            {{-- show all services --}}
+                            <button data-modal-target="services-modal-{{ $hotel->id }}"
+                                data-modal-toggle="services-modal-{{ $hotel->id }}"
+                                class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                type="button">
+                                Services
+                            </button>
+
+                            {{-- services modal --}}
+                            <div id="services-modal-{{ $hotel->id }}" tabindex="-1" aria-hidden="true"
+                                class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                                <div class="relative p-4 w-full max-w-md max-h-full">
+                                    <!-- Modal content -->
+                                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                        <button type="button"
+                                            class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                            data-modal-hide="services-modal-{{ $hotel->id }}">
+                                            <svg class="w-3 h-3" aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                viewBox="0 0 14 14">
+                                                <path stroke="currentColor" stroke-linecap="round"
+                                                    stroke-linejoin="round" stroke-width="2"
+                                                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                            </svg>
+                                            <span class="sr-only">Close modal</span>
+                                        </button>
+                                        <div class="p-4 md:p-5">
+                                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Service
+                                                proposé par ce hôtel</h3>
+                                            <div class="flex justify-between mb-1 text-gray-500 dark:text-gray-400">
+                                                {{-- my content --}}
+                                                <div class="flex flex-wrap">
+                                                    @foreach (json_decode($hotel->services) as $service)
+                                                        <span wire:key='{{ Str::random(40) }}'
+                                                            class="bg-indigo-100 text-indigo-800 text-xs font-medium m-0.5 px-2.5 py-1 rounded dark:bg-indigo-900 dark:text-indigo-300">
+                                                            {{ $service }}
+                                                        </span>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+
+                                            <!-- Modal footer -->
+                                            <div class="flex items-center mt-6 space-x-2 rtl:space-x-reverse">
+
+                                                <button data-modal-hide="services-modal-{{ $hotel->id }}"
+                                                    type="button"
+                                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                                                    Fermer
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Edit button -->
                             <button data-modal-target="edit-hotel-modal-{{ $hotel->id }}"
                                 data-modal-toggle="edit-hotel-modal-{{ $hotel->id }}"
                                 class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
                                 type="button">
-                                Modifié
+                                Modifier
                             </button>
 
-                            <!-- Main modal -->
+                            <!-- Edit modal -->
                             <div id="edit-hotel-modal-{{ $hotel->id }}" tabindex="-1" aria-hidden="true"
                                 class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                                <div class="relative p-4 w-full max-w-md max-h-full">
+                                <div class="relative py-4 px-96 w-full max-h-full">
                                     <!-- Modal content -->
                                     <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                                         <!-- Modal header -->
@@ -153,59 +245,13 @@
                                             </button>
                                         </div>
                                         <!-- Modal body -->
-                                        <form class="p-4 md:p-5">
-                                            <div class="grid gap-4 mb-4 grid-cols-2">
-                                                <div class="col-span-2">
-                                                    <label for="name"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-                                                    <input type="text" name="name" id="name"
-                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                        placeholder="Type product name" required="">
-                                                </div>
-                                                <div class="col-span-2 sm:col-span-1">
-                                                    <label for="price"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
-                                                    <input type="number" name="price" id="price"
-                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                        placeholder="$2999" required="">
-                                                </div>
-                                                <div class="col-span-2 sm:col-span-1">
-                                                    <label for="category"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
-                                                    <select id="category"
-                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                                        <option selected="">Select category</option>
-                                                        <option value="TV">TV/Monitors</option>
-                                                        <option value="PC">PC</option>
-                                                        <option value="GA">Gaming/Console</option>
-                                                        <option value="PH">Phones</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-span-2">
-                                                    <label for="description"
-                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product
-                                                        Description</label>
-                                                    <textarea id="description" rows="4"
-                                                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                        placeholder="Write product description here"></textarea>
-                                                </div>
-                                            </div>
-                                            <button type="submit"
-                                                class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                                <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor"
-                                                    viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                    <path fill-rule="evenodd"
-                                                        d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-                                                Add new product
-                                            </button>
-                                        </form>
+                                        <livewire:edit-hotel :hotel="$hotel">
+
                                     </div>
                                 </div>
                             </div>
 
-
+                            {{-- Delete button --}}
                             <button data-modal-target="delete-hotel-modal-{{ $hotel->id }}"
                                 data-modal-toggle="delete-hotel-modal-{{ $hotel->id }}"
                                 class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
@@ -213,6 +259,7 @@
                                 Supprimer
                             </button>
 
+                            {{-- Delete modal --}}
                             <div id="delete-hotel-modal-{{ $hotel->id }}" tabindex="-1"
                                 class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                                 <div class="relative p-4 w-full max-w-md max-h-full">
@@ -238,14 +285,13 @@
                                                     d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                             </svg>
                                             <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                                                Êtes-vous sûr de vouloir supprimer <span
-                                                    class="text-black font-medium">{{ $hotel->name }}</span>?
+                                                Êtes-vous sûr de vouloir supprimer
+                                                <span class="text-black font-medium">{{ $hotel->name }}</span>?
                                             </h3>
                                             <div class="flex gap-1 justify-center items-center">
                                                 <form method="post"
                                                     action="{{ route('admin.hotel.delete', ['id' => $hotel->id]) }}">
-                                                    @csrf
-                                                    @method('delete')
+                                                    @csrf @method('delete')
                                                     <button data-modal-hide="delete-hotel-modal-{{ $hotel->id }}"
                                                         type="submit"
                                                         class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
@@ -255,7 +301,8 @@
                                                 <button data-modal-hide="delete-hotel-modal-{{ $hotel->id }}"
                                                     type="button"
                                                     class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
-                                                    Non, annuler</button>
+                                                    Non, annuler
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -267,15 +314,19 @@
                 @endforeach
             </tbody>
         </table>
-
     </div>
-</div>
 
+    {{-- pagination --}}
+    <span class="block mt-2 mx-20">
+        {{ $hotels->links() }}
+    </span>
+
+</div>
 
 <script>
     function showMore(event) {
         const parentNode = event.target.parentNode;
-        const descriptionEl = parentNode.querySelector('.description');
+        const descriptionEl = parentNode.querySelector('.field');
         const allDescription = descriptionEl.getAttribute('data-all');
 
         event.target.classList.add('hidden');
@@ -286,7 +337,7 @@
 
     function showLess(event) {
         const parentNode = event.target.parentNode;
-        const descriptionEl = parentNode.querySelector('.description');
+        const descriptionEl = parentNode.querySelector('.field');
         const description = descriptionEl.getAttribute('data-less');
 
         event.target.classList.add('hidden');

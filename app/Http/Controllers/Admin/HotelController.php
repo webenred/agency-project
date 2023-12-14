@@ -3,16 +3,19 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Pagination\Paginator;
 use App\Models\Hotel;
 use Illuminate\Http\Request;
-
+use App\Models\User;
 class HotelController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $hotels = Hotel::get();
+        $limit = 10;
+        if ($request->query('limit')) $limit = $request->limit;
+
         return view('admin.manage-hotels', [
-            'hotels' => $hotels
+            'hotels' => Hotel::paginate($limit)
         ]);
     }
 
