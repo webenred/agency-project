@@ -18,6 +18,7 @@ class HotelFactory extends Factory
     {
         return [
             'name' => fake()->company(),
+            'slug' => fake()->slug(2),
             'description' => fake()->sentence(10),
             'coordinates' => json_encode(['phone' => "0500000000", 'email' => fake()->unique()->safeEmail()]),
             'classification' => rand(1, 5),
@@ -26,7 +27,6 @@ class HotelFactory extends Factory
             'country' => fake()->country(),
             'city' => fake()->city(),
             'address' => fake()->address(),
-            'zip' => fake()->postcode(),
         ];
     }
 }

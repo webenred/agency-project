@@ -12,9 +12,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-        // \App\Models\Hotel::factory(10)->create();
-        $agence = \App\Models\Agency::find(1);
+        \App\Models\User::factory(100)->create();
+        // \App\Models\Hotel::factory(100)->create();
+        // $agence = \App\Models\Agency::find(1);
         // $agence->coordinates()->create([
         //     'name' => 'Siége Social',
         //     'coordinates' => json_encode([
