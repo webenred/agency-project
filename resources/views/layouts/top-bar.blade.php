@@ -1,16 +1,19 @@
 {{-- top bar website --}}
 @php
-    $networks = json_decode($agence->networks, true);
-    $coordinates = $agence->coordinates;
+    $networks = $agence['networks'];
+    $coordinates = $agence['coordinates'];
+    $description = $agence['description'];
     $phones = [];
+    $emails = [];
     foreach ($coordinates as $value) {
-        $phones[] = json_decode($value->coordinates, true)['phone'];
+        $phones[] = $value['phone'];
+        $emails[] = $value['email'];
     }
-
+    
     $logos = [
         'instagram' => asset('storage/icons/instagram-logo.svg'),
         'facebook' => asset('storage/icons/facebook-logo.svg'),
-        'whatapp' => asset('storage/icons/whatsapp-logo.svg'),
+        'whatsapp' => asset('storage/icons/whatsapp-logo.svg'),
         'linkedin' => asset('storage/icons/linkedin-logo.svg'),
     ];
 @endphp
