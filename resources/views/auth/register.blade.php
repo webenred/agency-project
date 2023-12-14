@@ -23,9 +23,9 @@
             <x-input-label for="sex" :value="__('sexe')" />
             <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full"
                 name="sex" id="sex">
-                <option selected>sexe</option>
-                <option value="female">femelle</option>
-                <option value="male">mâle</option>
+                <option>sexe</option>
+                <option {{ old('sex') === "female" ? 'selected' : '' }} value="female">femelle</option>
+                <option {{ old('sex') === "male" ? 'selected' : '' }} value="male">mâle</option>
             </select>
             <x-input-error :messages="$errors->get('sex')" class="mt-2" />
         </div>

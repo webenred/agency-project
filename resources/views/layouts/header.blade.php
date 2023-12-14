@@ -1,84 +1,56 @@
-{{-- header admin panel --}}
-<nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary">
-    <!-- Container wrapper -->
-    <div class="container-fluid">
-        <!-- Toggle button -->
-        <button data-mdb-collapse-init class="navbar-toggler" type="button" data-mdb-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fas fa-bars"></i>
+<nav class="bg-gray-50 border-gray-200 sm:ml-64">
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-end mx-auto p-4">
+      
+        <button data-collapse-toggle="navbar-default" type="button"
+            class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 "
+            aria-controls="navbar-default" aria-expanded="false">
+            <span class="sr-only">Open main menu</span>
+            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 17 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M1 1h15M1 7h15M1 13h15" />
+            </svg>
         </button>
+        <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+            <x-dropdown align="right" width="48">
+                <x-slot name="trigger">
+                    <button
+                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                        <img src="https://ui-avatars.com/api/?name={{ Auth::user()->first_name . '+' . Auth::user()->last_name }}"
+                            class="rounded-full w-8 mr-3" alt="avatar">
+                        <div>{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}</div>
+                        <div class="ms-1">
+                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                    </button>
+                </x-slot>
 
-        <!-- Collapsible wrapper -->
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!-- Navbar brand -->
-            <a class="navbar-brand mt-2 mt-lg-0" href="#">
-                <img src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp" height="15"
-                    alt="MDB Logo" loading="lazy" />
-            </a>
-            <!-- Left links -->
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Team</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Projects</a>
-                </li>
-            </ul>
-            <!-- Left links -->
+                <x-slot name="content">
+                    <x-dropdown-link :href="route('profile.edit')">
+                        {{ __('Profile') }}
+                    </x-dropdown-link>
+
+                    <x-dropdown-link :href="route('welcome')">
+                        {{ __('Mon site') }}
+                    </x-dropdown-link>
+
+                    <!-- Authentication -->
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+
+                        <x-dropdown-link :href="route('logout')"
+                            onclick="event.preventDefault();
+                                        this.closest('form').submit();">
+                            {{ __('Log Out') }}
+                        </x-dropdown-link>
+                    </form>
+                </x-slot>
+            </x-dropdown>
         </div>
-        <!-- Collapsible wrapper -->
-
-        <!-- Right elements -->
-        <div class="d-flex align-items-center">
-            <!-- Icon -->
-            <a class="text-reset me-3" href="#">
-                <i class="fas fa-shopping-cart"></i>
-            </a>
-
-            <!-- Notifications -->
-            <div class="dropdown">
-                <a data-mdb-dropdown-init class="text-reset me-3 dropdown-toggle hidden-arrow" href="#"
-                    id="navbarDropdownMenuLink" role="button" aria-expanded="false">
-                    <i class="fas fa-bell"></i>
-                    <span class="badge rounded-pill badge-notification bg-danger">1</span>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
-                    <li>
-                        <a class="dropdown-item" href="#">Some news</a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="#">Another news</a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- Avatar -->
-            <div class="dropdown">
-                <a data-mdb-dropdown-init class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#"
-                    id="navbarDropdownMenuAvatar" role="button" aria-expanded="false">
-                    <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" height="25"
-                        alt="Black and White Portrait of a Man" loading="lazy" />
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
-                    <li>
-                        <a class="dropdown-item" href="#">My profile</a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="#">Settings</a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="#">Logout</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <!-- Right elements -->
     </div>
-    <!-- Container wrapper -->
 </nav>
-<!-- Navbar -->
