@@ -24,6 +24,9 @@
             <li>{{ $phones[1] }}</li>
         </ul>
         <div class="ml-2 flex">
+
+            @dd4
+
             @foreach ($networks as $network => $link)
                 <a href="{{ $link }}">
                     <img src="{{ $logos[$network] }}" alt="{{ $network }} logo">
