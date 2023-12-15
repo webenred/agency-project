@@ -37,8 +37,8 @@ class HotelController extends Controller
             'rating' => ['required', 'integer'],
             'nb_rooms' => ['required', 'integer'],
             'services' => ['required'],
-            // 'assets' => ['required', 'array', 'min:1'],
-            // 'assets.*' => ['required', 'image', 'mimes:jpg,svg,png,jpeg']
+            'assets' => ['required', 'array', 'min:1', 'max:6'],
+            'assets.*' => ['required', 'image', 'mimes:jpg,svg,png,jpeg', 'max:2048']
         ]);
 
         $hotel = Hotel::create([
@@ -56,6 +56,15 @@ class HotelController extends Controller
             'number_rooms' => $request->nb_rooms,
             'services' => json_encode(explode(',', $request->services))
         ]);
+
+        $assets = $request->file('assets');
+
+        for ($i = 0; $i < sizeof($assets); $i++) {
+            $hotel->assets()->create([
+                'type' => 'image',
+                'path' => $assets[$i]->store('public/hotels'),
+            ]);
+        }
 
         return redirect(route('admin.hotel.show', ['id' => $hotel->id]))->with('status', 'Hôtel créer avec succés');
     }
@@ -78,7 +87,7 @@ class HotelController extends Controller
     {
         $hotel = Hotel::findOrFail($id);
         $request->validate([
-            'name' => ['required', 'min:2', 'unique:hotels,name,'.$hotel->id],
+            'name' => ['required', 'min:2', 'unique:hotels,name,' . $hotel->id],
             'description' => ['required', 'min:10'],
             'address' => ['required', 'min:5'],
             'country' => ['required'],

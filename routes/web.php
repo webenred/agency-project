@@ -7,9 +7,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Models\Hotel;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 Route::get('/', function () {
-    $agence = Agency::find(1);
+    $agence = Storage::json('private/Agency.json');
     return view('welcome', ['agence' => $agence]);
 })->name('welcome');
 
@@ -23,7 +24,7 @@ Route::get('/trips', function () {
 })->name('trips');
 
 Route::get('/hotels', function () {
-    $agence = Agency::find(1);
+    $agence = Storage::json('private/Agency.json');
     $hotels = Hotel::all();
 
     return view('hotels', [
@@ -74,8 +75,16 @@ Route::middleware('auth', 'verified')->prefix('admin')->group(function () {
     Route::controller(HotelController::class)->group(function () {
         Route::get('/hotels', 'index')->name('admin.hotels');
         Route::get('/hotels/create', 'create')->name('admin.hotel.create');
+        Route::post('/hotels/create', 'store')->name('admin.hotel.store');
+        Route::get('/hotels/edit/{id}', 'edit')->name('admin.hotel.edit');
+        Route::post('/hotels/edit/{id}', 'update')->name('admin.hotel.update');
+        Route::get('/hotels/{id}', 'show')->name('admin.hotel.show');
+
+
         Route::delete('/hotels/{id}', 'delete')->name('admin.hotel.delete');
     });
+
+
     Route::get('/trips')->name('admin.trips');
 });
 
