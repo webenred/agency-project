@@ -1,0 +1,28 @@
+.img-editor {
+    position: relative;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(5px);
+    transition: opacity 0.3s ease-in-out;
+}
+
+.img-editor:hover .overlay {
+    opacity: 1;
+}
+
+.edit-icon {
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+}
